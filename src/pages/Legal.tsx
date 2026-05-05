@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import logo from "@/assets/logo-liftea.png";
+import logo from "../assets/logo-liftea.png";
 
 interface LegalLayoutProps {
   title: string;
