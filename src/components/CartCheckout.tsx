@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ShoppingBag, Minus, Plus, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import productRed from "@/assets/product-red.png";
 import productBlack from "@/assets/product-black.png";
 
@@ -41,29 +40,26 @@ export const CartCheckout = ({ open, onOpenChange, item, setItem }: Props) => {
   const update = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [field]: e.target.value });
 
+  // ⭐⭐ VERSIÓN APLICADA: REDIRECCIÓN DIRECTA A STRIPE ⭐⭐
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!item) return;
+
     for (const [k, v] of Object.entries(form)) {
       if (!v.trim()) { toast.error("Completa todos los campos"); return; }
       if (k === "email" && !/^\S+@\S+\.\S+$/.test(v)) { toast.error("Email no válido"); return; }
     }
+
     setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-order", {
-        body: { ...form, color: colorLabel, quantity: item.quantity },
-      });
-      if (error || !data?.success) throw new Error(error?.message || "Error");
-      toast.success("Pedido confirmado, redirigiendo al pago…");
-      const stripeUrl = new URL(STRIPE_LINK);
-      stripeUrl.searchParams.set("client_reference_id", data.order_id);
-      stripeUrl.searchParams.set("prefilled_email", form.email);
-      stripeUrl.searchParams.set("color", colorLabel);
-      setTimeout(() => { window.location.href = stripeUrl.toString(); }, 800);
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Error al procesar");
-      setLoading(false);
-    }
+    toast.success("Redirigiendo al pago…");
+
+    const stripeUrl = new URL(STRIPE_LINK);
+    stripeUrl.searchParams.set("prefilled_email", form.email);
+    stripeUrl.searchParams.set("color", colorLabel);
+
+    setTimeout(() => {
+      window.location.href = stripeUrl.toString();
+    }, 800);
   };
 
   return (
