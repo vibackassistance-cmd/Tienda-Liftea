@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Liftéa palette */
+    --background: 350 60% 98%;
+    --foreground: 0 0% 23%;
+
+    --soft-pink: 351 71% 92%;
+    --deep-pink: 346 60% 78%;
+    --soft-gold: 36 44% 69%;
+    --deep-gold: 36 50% 55%;
+    --charcoal: 0 0% 23%;
+    --cream: 30 40% 97%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 23%;
+
+    --primary: 346 60% 78%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 351 71% 92%;
+    --secondary-foreground: 0 0% 23%;
+
+    --muted: 350 40% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 36 44% 69%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 351 40% 90%;
+    --input: 351 40% 90%;
+    --ring: 36 44% 69%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(351 71% 95%) 0%, hsl(351 71% 88%) 50%, hsl(36 44% 78%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(36 50% 65%) 0%, hsl(36 60% 75%) 50%, hsl(36 50% 60%) 100%);
+    --gradient-pink: linear-gradient(135deg, hsl(346 60% 82%) 0%, hsl(346 60% 72%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(351 71% 98%) 0%, hsl(30 40% 97%) 100%);
+    --gradient-rose-gold: linear-gradient(135deg, hsl(346 60% 78%) 0%, hsl(36 44% 69%) 100%);
+
+    /* Shadows */
+    --shadow-luxury: 0 20px 60px -20px hsl(346 60% 70% / 0.35);
+    --shadow-gold: 0 10px 40px -10px hsl(36 50% 55% / 0.35);
+    --shadow-soft: 0 8px 30px -8px hsl(346 40% 60% / 0.15);
+
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-rose {
+    background: var(--gradient-rose-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .bg-gradient-gold { background: var(--gradient-gold); }
+  .bg-gradient-pink { background: var(--gradient-pink); }
+  .bg-gradient-soft { background: var(--gradient-soft); }
+  .bg-gradient-rose-gold { background: var(--gradient-rose-gold); }
+  .shadow-luxury { box-shadow: var(--shadow-luxury); }
+  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .transition-smooth { transition: var(--transition-smooth); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
